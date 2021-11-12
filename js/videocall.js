@@ -122,7 +122,7 @@ const videoGrid = document.getElementById('video-grid')
 const roomId = new URLSearchParams(location.search).get('roomId');
 const myPeer = new Peer(undefined, {
   path: '/peerjs',
-  host: 'videocallchat-server.herokuapp.com',
+  host: 'https://videocallchat-server.herokuapp.com',
   port: '443'
 })
 let myVideoStream;
