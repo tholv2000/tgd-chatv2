@@ -120,11 +120,8 @@ function checkDeviceSupport(callback) {
 const socket = io('https://videocallchat-server.herokuapp.com')
 const videoGrid = document.getElementById('video-grid')
 const roomId = new URLSearchParams(location.search).get('roomId');
-const myPeer = new Peer(undefined, {
-  path: '/peerjs',
-  host: 'videocallchat-server.herokuapp.com',
-  port: '443'
-})
+ const myPeer = new Peer(uuidv4())
+//const myPeer = new Peer();
 console.log(myPeer.id);
 let myVideoStream;
 
@@ -289,3 +286,10 @@ const setPlayVideo = () => {
   `
   document.querySelector('.main__video_button').innerHTML = html;
 }
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
