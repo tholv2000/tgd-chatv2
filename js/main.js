@@ -142,8 +142,9 @@ function onMessageReceived(payload) {
         messageElement.appendChild(messageBox);
     }
     else if (message.type == "CALL") {
+        console.log(message.sender == username);
         if (message.sender == username) {
-            window.open("roomvideo.html?roomId=" + roomId);
+            window.open("https://tgd-chatv2.herokuapp.com/roomvideo.html?roomId=" + roomId);
         }
         else {
             document.getElementById("modal-notice").style.display = "block";
