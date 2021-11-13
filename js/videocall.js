@@ -124,11 +124,13 @@ const roomId = new URLSearchParams(location.search).get('roomId');
 console.log(myPeer.id);
 let myVideoStream;
 
+checkDeviceSupport(function() {
+    console.log('hasWebCam: ', hasWebcam);
+    console.log('hasMicrophone: ', hasMicrophone);
+    console.log('isMicrophoneAlreadyCaptured: ', isMicrophoneAlreadyCaptured);
+    console.log('isWebcamAlreadyCaptured: ', isWebcamAlreadyCaptured);
+});
 
-console.log(hasMicrophone)
-console.log(hasWebcam)
-console.log(isMicrophoneAlreadyCaptured)
-console.log(isWebcamAlreadyCaptured)
 
 const myVideo = document.createElement('video')
 myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
