@@ -129,7 +129,7 @@ checkDeviceSupport(function() {
 
 
   const myVideo = document.createElement('video')
-  myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
+  //myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
   myVideo.muted = true;
   const peers = {}
   if (hasWebcam && hasMicrophone) {
@@ -153,25 +153,7 @@ checkDeviceSupport(function() {
       socket.on('user-connected', userId => {
         console.log(userId);
       //console.log(stream);
-        const call = myPeer.call(userId, stream)
-        //console.log(call);
-        const video = document.createElement('video')
-        //video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
-        call.on('stream', userVideoStream => {
-          console.log(2);
-          video.srcObject = stream
-          video.addEventListener('loadedmetadata', () => {
-            video.play()
-          })
-          videoGrid.append(video)
-          console.log(videoGrid)
-        })
-      
-        call.on('close', () => {
-          video.remove()
-        })
-
-        peers[userId] = call
+        connectToNewUser(userId, stream);
       })
 
       socket.emit('join-room', roomId, myPeer.id);
@@ -208,6 +190,7 @@ checkDeviceSupport(function() {
       })
 
       socket.on('user-connected', userId => {
+        console.log(userId);
         connectToNewUser(userId, stream)
       })
 
