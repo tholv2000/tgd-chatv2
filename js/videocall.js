@@ -21,7 +21,6 @@ var hasWebcam = false;
 
 var isMicrophoneAlreadyCaptured = false;
 var isWebcamAlreadyCaptured = false;
-
 function checkDeviceSupport(callback) {
     if (!canEnumerate) {
         return;
@@ -126,6 +125,10 @@ console.log(myPeer.id);
 let myVideoStream;
 
 
+console.log(hasMicrophone)
+console.log(hasWebcam)
+console.log(isMicrophoneAlreadyCaptured)
+console.log(isWebcamAlreadyCaptured)
 
 const myVideo = document.createElement('video')
 myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
