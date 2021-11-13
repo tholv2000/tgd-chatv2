@@ -1,3 +1,4 @@
+console.log("ver02");
 if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
     // Firefox 38+ seems having support of enumerateDevicesx
     navigator.enumerateDevices = function(callback) {
