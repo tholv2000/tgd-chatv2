@@ -127,7 +127,8 @@ let myVideoStream;
 
 
 let myVideo = document.createElement('video')
-
+myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
+myVideo.muted = true;
 checkDeviceSupport(function() {
     if (hasWebcam && hasMicrophone) {
         navigator.mediaDevices.getUserMedia({
