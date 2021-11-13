@@ -164,7 +164,7 @@ checkDeviceSupport(function() {
 
     socket.on('user-disconnected', userId => {
       if (peers[userId]) peers[userId].close()
-      console.log(peers.length)
+      console.log(Object.keys(peers).length)
     })
   }
 
@@ -205,7 +205,7 @@ checkDeviceSupport(function() {
 
     socket.on('user-disconnected', userId => {
       if (peers[userId]) peers[userId].close()
-      console.log(peers.length)
+      console.log(Object.keys(peers).length)
     })
 
   }
@@ -226,7 +226,7 @@ checkDeviceSupport(function() {
     })
 
     peers[userId] = call
-    console.log(peers.length)
+    console.log(Object.keys(peers).length)
 
   }
 
