@@ -151,7 +151,27 @@ checkDeviceSupport(function() {
       })
 
       socket.on('user-connected', userId => {
-        connectToNewUser(userId, stream)
+        console.log(userId);
+      //console.log(stream);
+        const call = myPeer.call(userId, stream)
+        //console.log(call);
+        const video = document.createElement('video')
+        video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
+        call.on('stream', userVideoStream => {
+          console.log(2);
+          video.srcObject = stream
+          video.addEventListener('loadedmetadata', () => {
+            video.play()
+          })
+          videoGrid.append(video)
+          console.log(videoGrid)
+        })
+      
+        call.on('close', () => {
+          video.remove()
+        })
+
+        peers[userId] = call
       })
 
       socket.emit('join-room', roomId, myPeer.id);
@@ -221,8 +241,7 @@ checkDeviceSupport(function() {
 
   function addVideoStream(video, stream) {
     video.srcObject = stream
-    video.autoplay = true;
-    video.load();
+    video.play();
     videoGrid.append(video)
     console.log(videoGrid)
   }
