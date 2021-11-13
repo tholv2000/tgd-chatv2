@@ -25,7 +25,7 @@ function connect(event) {
         usernamePage.classList.add('hidden');
         chatPage.classList.remove('hidden');
 
-        var socket = new SockJS('https://chatwebapp-websocketserver.herokuapp.com/ws');
+        var socket = new SockJS('http://localhost:8080/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
