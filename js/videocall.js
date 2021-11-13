@@ -119,19 +119,19 @@ const socket = io('https://videocallchat-server.herokuapp.com')
 
 checkDeviceSupport(function() {
 
-  let videoGrid = document.getElementById('video-grid')
-  let roomId = new URLSearchParams(location.search).get('roomId');
-  let myPeer = new Peer(uuidv4())
+  const videoGrid = document.getElementById('video-grid')
+  const roomId = new URLSearchParams(location.search).get('roomId');
+  const myPeer = new Peer(uuidv4())
   //const myPeer = new Peer();
   console.log(myPeer.id);
   let myVideoStream;
 
 
 
-  let myVideo = document.createElement('video')
+  const myVideo = document.createElement('video')
   myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
   myVideo.muted = true;
-  let peers = {}
+  const peers = {}
   if (hasWebcam && hasMicrophone) {
     navigator.mediaDevices.getUserMedia({
       video: true,
@@ -144,7 +144,7 @@ checkDeviceSupport(function() {
         call.answer(stream)
 
         const video = document.createElement('video')
-        video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
+        //video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
         call.on('stream', userVideoStream => {
           addVideoStream(video, userVideoStream)
         })
@@ -156,7 +156,7 @@ checkDeviceSupport(function() {
         const call = myPeer.call(userId, stream)
         //console.log(call);
         const video = document.createElement('video')
-        video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
+        //video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
         call.on('stream', userVideoStream => {
           console.log(2);
           video.srcObject = stream
@@ -201,7 +201,7 @@ checkDeviceSupport(function() {
         call.answer(stream)
 
         const video = document.createElement('video')
-        video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
+        //video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
         call.on('stream', userVideoStream => {
           addVideoStream(video, userVideoStream)
         })
@@ -227,7 +227,7 @@ checkDeviceSupport(function() {
     const call = myPeer.call(userId, stream)
     //console.log(call);
     const video = document.createElement('video')
-    video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
+    //video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
     call.on('stream', userVideoStream => {
       console.log(2);
       addVideoStream(video, userVideoStream)
