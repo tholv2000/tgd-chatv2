@@ -232,9 +232,9 @@ checkDeviceSupport(function() {
 
   function addVideoStream(video, stream) {
     video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-        video.play()
-      })
+    
+    video.play()
+      
     videoGrid.append(video)
     console.log(videoGrid)
   }
