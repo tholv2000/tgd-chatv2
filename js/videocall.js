@@ -117,12 +117,16 @@ function checkDeviceSupport(callback) {
 
 
 const socket = io('https://videocallchat-server.herokuapp.com')
-const videoGrid = document.getElementById('video-grid')
-const roomId = new URLSearchParams(location.search).get('roomId');
- const myPeer = new Peer(uuidv4())
+let videoGrid = document.getElementById('video-grid')
+let roomId = new URLSearchParams(location.search).get('roomId');
+let myPeer = new Peer(uuidv4())
 //const myPeer = new Peer();
 console.log(myPeer.id);
 let myVideoStream;
+
+
+
+let myVideo = document.createElement('video')
 
 checkDeviceSupport(function() {
     if (hasWebcam && hasMicrophone) {
