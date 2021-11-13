@@ -221,7 +221,8 @@ checkDeviceSupport(function() {
 
   function addVideoStream(video, stream) {
     video.srcObject = stream
-    video.play();
+    video.autoplay = true;
+    video.load();
     videoGrid.append(video)
     console.log(videoGrid)
   }
