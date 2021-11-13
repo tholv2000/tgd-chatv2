@@ -164,6 +164,7 @@ checkDeviceSupport(function() {
 
     socket.on('user-disconnected', userId => {
       if (peers[userId]) peers[userId].close()
+      console.log(peers.length)
     })
   }
 
@@ -204,6 +205,7 @@ checkDeviceSupport(function() {
 
     socket.on('user-disconnected', userId => {
       if (peers[userId]) peers[userId].close()
+      console.log(peers.length)
     })
 
   }
@@ -224,6 +226,8 @@ checkDeviceSupport(function() {
     })
 
     peers[userId] = call
+    console.log(peers.length)
+
   }
 
   function addVideoStream(video, stream) {
