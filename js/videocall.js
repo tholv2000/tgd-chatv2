@@ -125,78 +125,68 @@ console.log(myPeer.id);
 let myVideoStream;
 
 checkDeviceSupport(function() {
-    console.log('hasWebCam: ', hasWebcam);
-    console.log('hasMicrophone: ', hasMicrophone);
-    console.log('isMicrophoneAlreadyCaptured: ', isMicrophoneAlreadyCaptured);
-    console.log('isWebcamAlreadyCaptured: ', isWebcamAlreadyCaptured);
+    if (hasWebcam && hasMicrophone) {
+        navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: true
+        }).then(stream => {
+          myVideoStream = stream;
+          addVideoStream(myVideo, stream)
+          myPeer.on('call', call => {
+            console.log(stream)
+            call.answer(stream)
+            
+            const video = document.createElement('video')
+            video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
+            call.on('stream', userVideoStream => {
+              addVideoStream(video, userVideoStream)
+            })
+          })
+
+          socket.on('user-connected', userId => {
+            connectToNewUser(userId, stream)
+          })
+
+          socket.emit('join-room', roomId, myPeer.id);
+          
+        })
+
+        socket.on('user-disconnected', userId => {
+          if (peers[userId]) peers[userId].close()
+        })
+      }
+
+      else {
+        navigator.mediaDevices.getUserMedia({
+          video: false,
+          audio: true
+        }).then(stream => {
+          myVideoStream = stream;
+          addVideoStream(myVideo, stream)
+          myPeer.on('call', call => {
+            console.log(stream)
+            call.answer(stream)
+            
+            const video = document.createElement('video')
+            video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
+            call.on('stream', userVideoStream => {
+              addVideoStream(video, userVideoStream)
+            })
+          })
+
+          socket.on('user-connected', userId => {
+            connectToNewUser(userId, stream)
+          })
+
+          socket.emit('join-room', roomId, myPeer.id);
+          
+        })
+
+        socket.on('user-disconnected', userId => {
+          if (peers[userId]) peers[userId].close()
+        })
+      }
 });
-
-
-const myVideo = document.createElement('video')
-myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
-myVideo.muted = true;
-const peers = {}
-if (hasWebcam && hasMicrophone) {
-  navigator.mediaDevices.getUserMedia({
-    video: true,
-    audio: true
-  }).then(stream => {
-    myVideoStream = stream;
-    addVideoStream(myVideo, stream)
-    myPeer.on('call', call => {
-      console.log(stream)
-      call.answer(stream)
-      
-      const video = document.createElement('video')
-      video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
-      call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream)
-      })
-    })
-
-    socket.on('user-connected', userId => {
-      connectToNewUser(userId, stream)
-    })
-
-    socket.emit('join-room', roomId, myPeer.id);
-    
-  })
-
-  socket.on('user-disconnected', userId => {
-    if (peers[userId]) peers[userId].close()
-  })
-}
-
-else {
-  navigator.mediaDevices.getUserMedia({
-    video: false,
-    audio: true
-  }).then(stream => {
-    myVideoStream = stream;
-    addVideoStream(myVideo, stream)
-    myPeer.on('call', call => {
-      console.log(stream)
-      call.answer(stream)
-      
-      const video = document.createElement('video')
-      video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
-      call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream)
-      })
-    })
-
-    socket.on('user-connected', userId => {
-      connectToNewUser(userId, stream)
-    })
-
-    socket.emit('join-room', roomId, myPeer.id);
-    
-  })
-
-  socket.on('user-disconnected', userId => {
-    if (peers[userId]) peers[userId].close()
-  })
-}
 
 // myPeer.on('open', id => {
 //   socket.emit('join-room', roomId, id)
