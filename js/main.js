@@ -84,7 +84,11 @@ function onMessageReceived(payload) {
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
-    } else if (message.type === 'CHAT') {
+    }
+    else if (message.type === 'CALL' || message.type === 'ANSWER') {
+        messageElement.classList.add('event-message');
+    }
+    else if (message.type === 'CHAT') {
         if (message.sender === username) {
             messageElement.classList.add('my-message');
         } else {
@@ -106,6 +110,7 @@ function onMessageReceived(payload) {
         messageBox.classList.add('message-box');
         messageBox.appendChild(usernameElement);
     }
+
     if (message.type == "FILE") {
         if (message.sender === username) {
             messageElement.classList.add('my-message');
@@ -142,13 +147,31 @@ function onMessageReceived(payload) {
         messageElement.appendChild(messageBox);
     }
     else if (message.type == "CALL") {
-        console.log(message.sender == username);
+        document.getElementById("callBtn").disabled = true;
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode(message.content);
+        textElement.appendChild(messageText);
+        
+        messageBox.appendChild(textElement);
+        messageElement.appendChild(messageBox); 
+        messageArea.appendChild(messageElement);
+        messageArea.scrollTop = messageArea.scrollHeight;   
         if (message.sender == username) {
-            window.open("https://tgd-chatv2.herokuapp.com/roomvideo.html?roomId=" + roomId);
+
+            window.open("roomvideo.html?roomId=" + roomId);
         }
         else {
             document.getElementById("modal-notice").style.display = "block";
             document.getElementById("answerBtn").onclick = function() {
+                if (stompClient) {
+                    var chatMessage = {
+                        sender: username,
+                        content: username + " đã tham gia cuộc gọi video",
+                        roomId: roomId,
+                        type: 'ANSWER'
+                    };
+                    stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+                }
                 document.getElementById("modal-notice").style.display = "none";
                 window.open("roomvideo.html?roomId=" + roomId);
             }
@@ -159,6 +182,7 @@ function onMessageReceived(payload) {
                 document.getElementById("modal-notice").style.display = "none";
             }
         }
+        
     }
     else if (message.type == "CHAT") {
         // result after replacing emoji
@@ -240,8 +264,12 @@ document.getElementById("callBtn").onclick = function() {
         var chatMessage = {
             sender: username,
             roomId: roomId,
+            content: username + " đã tạo cuộc gọi video",
             type: 'CALL'
         };
         stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
     }
 }
+
+
+
