@@ -11,7 +11,9 @@ let myVideo = document.createElement('video')
 myVideo.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
 myVideo.muted = true;
 let peers = {}
-if (DetectRTC.hasWebcam && DetectRTC.hasMicrophone) {
+console.log(DetectRTC.hasWebcam);
+console.log(DetectRTC.hasMicrophone);
+if (DetectRTC.hasWebcam === true && DetectRTC.hasMicrophone === true) {
   navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
