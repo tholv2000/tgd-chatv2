@@ -162,40 +162,40 @@ checkDeviceSupport(function() {
       socket.on('user-disconnected', userId => {
         if (peers[userId]) peers[userId].close()
       })
-    }
+  }
 
-    else {
-      navigator.mediaDevices.getUserMedia({
-        video: false,
-        audio: true
-      }).then(stream => {
-        myVideoStream = stream;
-        addVideoStream(myVideo, stream)
-        myPeer.on('call', call => {
-          console.log(stream)
-          call.answer(stream)
-          
-          const video = document.createElement('video')
-          video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
-          call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream)
-          })
-        })
-
-        socket.on('user-connected', userId => {
-          connectToNewUser(userId, stream)
-        })
-
-        socket.emit('join-room', roomId, myPeer.id);
+  else {
+    navigator.mediaDevices.getUserMedia({
+      video: false,
+      audio: true
+    }).then(stream => {
+      myVideoStream = stream;
+      addVideoStream(myVideo, stream)
+      myPeer.on('call', call => {
+        console.log(stream)
+        call.answer(stream)
         
+        const video = document.createElement('video')
+        video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg";
+        call.on('stream', userVideoStream => {
+          addVideoStream(video, userVideoStream)
+        })
       })
 
-      socket.on('user-disconnected', userId => {
-        if (peers[userId]) peers[userId].close()
+      socket.on('user-connected', userId => {
+        connectToNewUser(userId, stream)
       })
-    }
+
+      socket.emit('join-room', roomId, myPeer.id);
+      
+    })
+
+    socket.on('user-disconnected', userId => {
+      if (peers[userId]) peers[userId].close()
+    })
+  }
     
-    function connectToNewUser(userId, stream) {
+  function connectToNewUser(userId, stream) {
     console.log(userId);
     //console.log(stream);
     const call = myPeer.call(userId, stream)
@@ -215,9 +215,7 @@ checkDeviceSupport(function() {
 
   function addVideoStream(video, stream) {
     video.srcObject = stream
-    video.addEventListener('loadedmetadata', () => {
-      video.play()
-    })
+    video.play();
     videoGrid.append(video)
     console.log(videoGrid)
   }
