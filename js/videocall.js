@@ -166,7 +166,6 @@ checkDeviceSupport(function() {
     document.querySelector('.main__video_button').innerHTML = html;
     //document.querySelector('.main__video_button').disabled = true;
     navigator.mediaDevices.getUserMedia({
-      video: false,
       audio: true
     }).then(stream => {
       myVideoStream = stream;
@@ -246,7 +245,7 @@ socket.on('user-disconnected', userId => {
 
 myPeer.on('call', call => {
   console.log(streamTemp)
-  console.log(streamTemp.getVideoTracks()[0])
+  //console.log(streamTemp.getVideoTracks()[0])
   call.answer(streamTemp)
 
   const video = document.createElement('video')
