@@ -246,6 +246,7 @@ socket.on('user-disconnected', userId => {
 
 myPeer.on('call', call => {
   console.log(streamTemp)
+  console.log(streamTemp.getVideoTracks()[0])
   call.answer(streamTemp)
 
   const video = document.createElement('video')
