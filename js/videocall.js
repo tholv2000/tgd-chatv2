@@ -273,9 +273,9 @@ function connectToNewUser(userId) {
   const video = document.createElement('video')
   video.poster = "https://gamek.mediacdn.vn/133514250583805952/2020/2/26/photo-1-15827070847125071669.jpeg"
   call.on('stream', userVideoStream => {
-    console.log(2);
+    console.log("check audio stream is available: " + userVideoStream.getAudioTracks()[0].enabled);
     console.log("check video stream is available: " + userVideoStream.getVideoTracks()[0].enabled);
-    if (!userVideoStream.getVideoTracks()[0].enabled) {
+    if (userVideoStream.getVideoTracks()[0].enabled == false) {
       userVideoStream.getVideoTracks()[0].enabled = true;
     }
     addVideoStream(video, userVideoStream)
