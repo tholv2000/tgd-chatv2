@@ -275,12 +275,13 @@ function connectToNewUser(userId) {
   call.on('stream', userVideoStream => {
     
     if (userVideoStream.getVideoTracks()[0]) {
-      console.log("check audio stream is available: " + userVideoStream.getAudioTracks()[0].enabled);
+      console.log("check video stream is available: " + userVideoStream.getVideoTracks()[0].enabled);
       if (userVideoStream.getVideoTracks()[0].enabled == false) {
         userVideoStream.getVideoTracks()[0].enabled = true;
       }
     }
-    console.log("check video stream is available: " + userVideoStream.getVideoTracks()[0].enabled);
+    console.log("check audio stream is available: " + userVideoStream.getAudioTracks()[0].enabled);
+    
     
     addVideoStream(video, userVideoStream)
   })
